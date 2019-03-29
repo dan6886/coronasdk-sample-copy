@@ -33,10 +33,12 @@ function scene:create( event )
 	-- Load our UI
 	local uiData = json.decodeFile( system.pathForFile( "scene/menu/ui/title.json", system.ResourceDirectory ) )
 	ui = tiled.new( uiData, "scene/menu/ui" )
+	--加载UI
 	ui.x, ui.y = display.contentCenterX - ui.designedWidth/2, display.contentCenterY - ui.designedHeight/2
 
 	-- Find the start button
 	start = ui:findObject( "start" )
+	--注册触摸事件
 	function start:tap()
 		fx.fadeOut( function()
 				composer.gotoScene( "scene.game", { params = {} } )
