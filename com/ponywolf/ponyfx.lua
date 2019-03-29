@@ -128,6 +128,7 @@ function M.bounce( object, intensity, time )
 end
 
 -- Breath fx function
+-- 交替执行宽度改变的动画
 function M.breath( object, intensity, time )
 
 	if not object.contentBounds then
@@ -294,15 +295,15 @@ function M.newStreak( options )
 		streak:setFillColor( unpack(color) )
 		streaks:insert( streak )
 	end
-
+	-- 每帧旋转一定角度
 	local function spin()
 		streaks:rotate( speed )
 	end
-
+	-- 开始监听，每帧旋转
 	function streaks:start()
 		Runtime:addEventListener( "enterFrame", spin )
 	end
-
+	--停止监听
 	function streaks:stop()
 		Runtime:removeEventListener( "enterFrame", spin )
 	end

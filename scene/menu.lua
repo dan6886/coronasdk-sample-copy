@@ -31,7 +31,9 @@ function scene:create( event )
 	bgMusic = audio.loadStream( "scene/menu/sfx/titletheme.wav" )
 
 	-- Load our UI
+	-- 通过json文件加载lua
 	local uiData = json.decodeFile( system.pathForFile( "scene/menu/ui/title.json", system.ResourceDirectory ) )
+	-- 加载整个ui场景
 	ui = tiled.new( uiData, "scene/menu/ui" )
 	--加载UI
 	ui.x, ui.y = display.contentCenterX - ui.designedWidth/2, display.contentCenterY - ui.designedHeight/2
@@ -58,7 +60,9 @@ function scene:create( event )
 
 	-- Add streaks
 	local streaks = fx.newStreak()
+	-- 位置设置在log的中心
 	streaks.x, streaks.y = ui:findObject( "logo" ):localToContent( -10, 0 )
+	-- 插入到云层
 	ui:findLayer( "clouds" ):insert( streaks )
 
 	sceneGroup:insert( ui )
@@ -78,11 +82,14 @@ function scene:show( event )
 
 	local phase = event.phase
 	if ( phase == "will" ) then
+		-- 显示一个遮罩然后消失显示出当前场景
 		fx.fadeIn()
 		-- add enterFrame listener
 		Runtime:addEventListener( "enterFrame", enterFrame )
 	elseif ( phase == "did" ) then
+		-- 开始按钮注册tap事件
 		start:addEventListener( "tap" )
+		-- 播放音效
 		timer.performWithDelay( 10, function()
 			audio.play( bgMusic, { loops = -1, channel = 1 } )
 			audio.fade({ channel = 1, time = 333, volume = 1.0 } )
